@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="criterio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM items
+where nombreprod like concat($P{criterio},'%')
+or idproductos = $P{criterio}
+order by idproductos, nombreprod]]>
+	</queryString>
+	<field name="idproductos" class="java.lang.Integer"/>
+	<field name="codigobarras" class="java.lang.String"/>
+	<field name="nombreprod" class="java.lang.String"/>
+	<field name="preciocosto" class="java.lang.Double"/>
+	<field name="precioventa" class="java.lang.Double"/>
+	<field name="prodnacional" class="java.lang.Boolean"/>
+	<field name="stockmin" class="java.lang.Integer"/>
+	<field name="idseccion" class="java.lang.Integer"/>
+	<field name="idmarcas" class="java.lang.Integer"/>
+	<field name="idubicaciones" class="java.lang.Integer"/>
+	<field name="idprocedencia" class="java.lang.Integer"/>
+	<variable name="idproductos_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{idproductos}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="416" y="0" width="128" height="79"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\ITEM\\Button Icon\\1378886131_Product-documentation.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="28" width="426" height="41" forecolor="#000099"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CASA DANNA NOVEDADES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="185" y="15" width="182" height="20" forecolor="#000066"/>
+				<textElement>
+					<font fontName="Berlin Sans FB Demi" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME DE PRODUCTOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="131" y="3" width="32" height="32"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\ITEM\\Button Icon\\1378917522_application_form_edit.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="2" width="555" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="2" width="23" height="18"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="2" width="65" height="18"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cod. Barras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="2" width="65" height="18"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="2" width="65" height="18"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[P. de Costo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="0" width="63" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[P. de Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="1" width="45" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="2" width="56" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Stock min.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="2" width="39" height="18"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID.secc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="2" width="50" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID.marc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="2" width="34" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID.ubic.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="2" width="37" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID proc.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="23" y="0" width="1" height="22"/>
+			</line>
+			<line>
+				<reportElement x="89" y="2" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement x="153" y="3" width="1" height="17"/>
+			</line>
+			<line>
+				<reportElement x="218" y="2" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement x="284" y="2" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement x="331" y="3" width="1" height="17"/>
+			</line>
+			<line>
+				<reportElement x="388" y="3" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement x="429" y="0" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement x="480" y="3" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="515" y="4" width="1" height="18"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="3" width="23" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idproductos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="3" width="63" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{codigobarras}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="2" width="62" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreprod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="154" y="0" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{preciocosto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="1" width="63" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{precioventa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="2" width="40" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{prodnacional}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="1" width="47" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{stockmin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="2" width="28" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idseccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="1" width="38" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idmarcas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="1" width="35" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idubicaciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="518" y="1" width="26" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idprocedencia}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="24" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="88" y="1" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="152" y="1" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="219" y="3" width="1" height="17"/>
+			</line>
+			<line>
+				<reportElement x="285" y="1" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="332" y="3" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="389" y="3" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement x="428" y="1" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="480" y="3" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="515" y="2" width="1" height="16"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="68" y="14" width="214" height="20"/>
+				<textElement>
+					<font fontName="Arial Black" size="10"/>
+				</textElement>
+				<text><![CDATA[Cantidad de registros encontrados -->]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="326" y="14" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{idproductos_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="416" y="12" width="100" height="1"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="416" y="23" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

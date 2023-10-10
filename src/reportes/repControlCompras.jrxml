@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="criterio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from facturacompra
+where nrofact like concat($P{criterio})]]>
+	</queryString>
+	<field name="idproductos" class="java.lang.Integer"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="nombreprod" class="java.lang.String"/>
+	<field name="precioCost" class="java.lang.Integer"/>
+	<field name="exenta" class="java.lang.Long"/>
+	<field name="iva5" class="java.lang.Long"/>
+	<field name="iva10" class="java.lang.Long"/>
+	<field name="xidcompra" class="java.lang.Integer"/>
+	<field name="xnrofact" class="java.lang.Integer"/>
+	<field name="totexenta" class="java.math.BigDecimal"/>
+	<field name="totiva5" class="java.math.BigDecimal"/>
+	<field name="totiva10" class="java.math.BigDecimal"/>
+	<field name="total5" class="java.math.BigDecimal"/>
+	<field name="total10" class="java.math.BigDecimal"/>
+	<field name="totaliva" class="java.math.BigDecimal"/>
+	<field name="totalfactura" class="java.math.BigDecimal"/>
+	<field name="nrofact" class="java.lang.Integer"/>
+	<field name="fechaCompra" class="java.sql.Date"/>
+	<field name="idformadepago" class="java.lang.Integer"/>
+	<field name="idcontactos" class="java.lang.Integer"/>
+	<field name="razonSocial" class="java.lang.String"/>
+	<field name="rucCI" class="java.lang.Integer"/>
+	<field name="direccion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="74" y="38" width="426" height="41" forecolor="#000099"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CASA DANNA NOVEDADES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<rectangle>
+				<reportElement x="407" y="6" width="148" height="62"/>
+			</rectangle>
+			<textField>
+				<reportElement x="74" y="15" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fechaCompra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="68" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="68" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{rucCI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="474" y="13" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nrofact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="34" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idcontactos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="412" y="15" width="52" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nro Fact:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="35" width="52" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cajero/a:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="68" width="52" height="20"/>
+				<textElement/>
+				<text><![CDATA[Ruc/CI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="68" width="71" height="20"/>
+				<textElement/>
+				<text><![CDATA[Razon Social:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="15" width="52" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="39" height="20"/>
+				<textElement/>
+				<text><![CDATA[idproductos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="0" width="51" height="20"/>
+				<textElement/>
+				<text><![CDATA[cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="69" height="20"/>
+				<textElement/>
+				<text><![CDATA[nombreprod]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="0" width="76" height="20"/>
+				<textElement/>
+				<text><![CDATA[precioCost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="0" width="66" height="20"/>
+				<textElement/>
+				<text><![CDATA[exenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="0" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[iva5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="0" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[iva10]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="426" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="0" width="37" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idproductos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="0" width="51" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreprod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="159" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{precioCost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="66" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{exenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="0" width="70" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{iva5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="55" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{iva10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="41" width="63" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totiva5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="41" width="66" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totexenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="41" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totiva10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="81" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totalfactura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="397" y="41" width="52" height="20"/>
+				<textElement/>
+				<text><![CDATA[Iva 10%:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="41" width="40" height="20"/>
+				<textElement/>
+				<text><![CDATA[Iva 5%:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="41" width="40" height="20"/>
+				<textElement/>
+				<text><![CDATA[Exentas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="81" width="96" height="20"/>
+				<textElement/>
+				<text><![CDATA[TOTAL FACTURA:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

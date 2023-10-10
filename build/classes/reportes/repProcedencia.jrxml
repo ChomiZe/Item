@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="criterio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM item_procedencia
+where descripProc like concat($P{criterio},'%')
+or idprocedencia = $P{criterio}
+order by idprocedencia, descripProc]]>
+	</queryString>
+	<field name="idprocedencia" class="java.lang.Integer"/>
+	<field name="descripProc" class="java.lang.String"/>
+	<variable name="idprocedencia_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{idprocedencia}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="416" y="-2" width="128" height="79"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\ITEM\\Button Icon\\1378886131_Product-documentation.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="26" width="426" height="41" forecolor="#000099"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CASA DANNA NOVEDADES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="15" width="199" height="20" forecolor="#000066"/>
+				<textElement>
+					<font fontName="Berlin Sans FB Demi" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME DE PROCEDENCIAS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="107" y="3" width="32" height="32"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\ITEM\\Button Icon\\1378917522_application_form_edit.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement x="152" y="0" width="199" height="23"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="151" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[ID PROCEDENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<line>
+				<reportElement x="241" y="0" width="1" height="23"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="152" y="0" width="199" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="251" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descripProc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idprocedencia}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="241" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="92" y="10" width="214" height="20"/>
+				<textElement>
+					<font fontName="Arial Black" size="10"/>
+				</textElement>
+				<text><![CDATA[Cantidad de registros encontrados -->]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="351" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{idprocedencia_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="416" y="11" width="100" height="1"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="416" y="22" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

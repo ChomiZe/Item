@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="criterio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM vistacobro
+where nrofact like concat($P{criterio})]]>
+	</queryString>
+	<field name="idcobro_cuotas" class="java.lang.Integer"/>
+	<field name="idcontactos" class="java.lang.Integer"/>
+	<field name="razonSocial" class="java.lang.String"/>
+	<field name="nrofact" class="java.lang.Integer"/>
+	<field name="montoEntregado" class="java.lang.Double"/>
+	<field name="idcondiciondepago" class="java.lang.Integer"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="rucCI" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="22" width="426" height="41" forecolor="#000099"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CASA DANNA NOVEDADES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="416" y="0" width="128" height="79"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\ITEM\\Button Icon\\1378886131_Product-documentation.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<image>
+				<reportElement x="109" y="0" width="32" height="32"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\ITEM\\Button Icon\\1378917522_application_form_edit.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="160" y="0" width="177" height="20" forecolor="#000066"/>
+				<textElement>
+					<font fontName="Berlin Sans FB Demi" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME DE COBROS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="35" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cod.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="41" width="44" height="20"/>
+				<textElement/>
+				<text><![CDATA[Contacto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="41" width="69" height="20"/>
+				<textElement/>
+				<text><![CDATA[Ruc/CI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="41" width="41" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nro.Fact]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="41" width="67" height="20"/>
+				<textElement/>
+				<text><![CDATA[Entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="41" width="41" height="20"/>
+				<textElement/>
+				<text><![CDATA[Id Cond]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="41" width="67" height="20"/>
+				<textElement/>
+				<text><![CDATA[Razon Social]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="464" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="76" y="0" width="44" height="22"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idcontactos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="2" width="67" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="35" y="2" width="41" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nrofact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="256" y="0" width="67" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{montoEntregado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="0" width="41" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idcondiciondepago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{rucCI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="2" width="35" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idcobro_cuotas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

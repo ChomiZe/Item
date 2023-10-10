@@ -1,0 +1,891 @@
+CREATE DATABASE  IF NOT EXISTS `lpiii` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
+USE `lpiii`;
+-- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
+--
+-- Host: localhost    Database: lpiii
+-- ------------------------------------------------------
+-- Server version	5.5.28
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `categoria`
+--
+
+DROP TABLE IF EXISTS `categoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categoria` (
+  `idcategoria` int(11) NOT NULL,
+  `descripcion` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `porcIVA` float NOT NULL,
+  PRIMARY KEY (`idcategoria`),
+  UNIQUE KEY `idcategoria_UNIQUE` (`idcategoria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categoria`
+--
+
+LOCK TABLES `categoria` WRITE;
+/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+INSERT INTO `categoria` VALUES (1,'Iva10%',10),(2,'Iva5%',5),(3,'Exentas',0);
+/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cobro_cuotas`
+--
+
+DROP TABLE IF EXISTS `cobro_cuotas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cobro_cuotas` (
+  `idcobro_cuotas` int(11) NOT NULL,
+  `idcontactos` int(11) NOT NULL,
+  `nrofact` int(11) NOT NULL,
+  `montoEntregado` double NOT NULL,
+  `idcondiciondepago` int(11) NOT NULL,
+  PRIMARY KEY (`idcobro_cuotas`,`idcontactos`),
+  KEY `fk_cobro_cuotas_factventa_encab1_idx` (`idcontactos`,`nrofact`),
+  KEY `fk_cobro_cuotas_formadepago1_idx` (`idcondiciondepago`),
+  KEY `fk_cobro_cuotas_factventa_encab1` (`nrofact`),
+  CONSTRAINT `fk_cobro_cuotas_factventa_encab1` FOREIGN KEY (`nrofact`) REFERENCES `factventa_encab` (`nrofact`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_cobro_cuotas_formadepago1` FOREIGN KEY (`idcondiciondepago`) REFERENCES `condiciondepago` (`idcondiciondepago`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cobro_cuotas`
+--
+
+LOCK TABLES `cobro_cuotas` WRITE;
+/*!40000 ALTER TABLE `cobro_cuotas` DISABLE KEYS */;
+INSERT INTO `cobro_cuotas` VALUES (1,3,30,10000,1);
+/*!40000 ALTER TABLE `cobro_cuotas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `condiciondepago`
+--
+
+DROP TABLE IF EXISTS `condiciondepago`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `condiciondepago` (
+  `idcondiciondepago` int(11) NOT NULL,
+  `descripcion` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idcondiciondepago`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `condiciondepago`
+--
+
+LOCK TABLES `condiciondepago` WRITE;
+/*!40000 ALTER TABLE `condiciondepago` DISABLE KEYS */;
+INSERT INTO `condiciondepago` VALUES (1,'efectivo'),(2,'cheque');
+/*!40000 ALTER TABLE `condiciondepago` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contactos`
+--
+
+DROP TABLE IF EXISTS `contactos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contactos` (
+  `idcontactos` int(11) NOT NULL,
+  `razonSocial` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `rucCI` int(11) NOT NULL,
+  `direccion` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `telCEL` int(11) DEFAULT NULL,
+  `idtipo_cto` int(11) NOT NULL,
+  PRIMARY KEY (`idcontactos`),
+  KEY `fk_contactos_tipo_cto1_idx` (`idtipo_cto`),
+  CONSTRAINT `fk_contactos_tipo_cto1` FOREIGN KEY (`idtipo_cto`) REFERENCES `tipo_cto` (`idtipo_cto`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contactos`
+--
+
+LOCK TABLES `contactos` WRITE;
+/*!40000 ALTER TABLE `contactos` DISABLE KEYS */;
+INSERT INTO `contactos` VALUES (1,'Imperial',601211,'cde',789465632,1),(2,'Rumilda',78624,'czu',78516546,2),(3,'Federica',1234567,'villa ind',9942589,2),(4,'ña Maera',7892456,'mongolia',6948412,1);
+/*!40000 ALTER TABLE `contactos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `detallecompra`
+--
+
+DROP TABLE IF EXISTS `detallecompra`;
+/*!50001 DROP VIEW IF EXISTS `detallecompra`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `detallecompra` (
+  `idproductos` int(10),
+  `cantidad` int(11),
+  `nombreprod` varchar(45),
+  `precioCost` double,
+  `exenta` double,
+  `iva5` double,
+  `iva10` double,
+  `xidcompra` int(11)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `detalleventa`
+--
+
+DROP TABLE IF EXISTS `detalleventa`;
+/*!50001 DROP VIEW IF EXISTS `detalleventa`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `detalleventa` (
+  `idproductos` int(10),
+  `cantidad` int(11),
+  `nombreprod` varchar(45),
+  `precioVenta` double,
+  `exenta` double,
+  `iva5` double,
+  `iva10` double,
+  `xidventa` int(11)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `factcompra_det`
+--
+
+DROP TABLE IF EXISTS `factcompra_det`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `factcompra_det` (
+  `idproductos` int(10) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precioCost` double NOT NULL,
+  `porcIVA` double NOT NULL,
+  `nrofact` int(11) NOT NULL,
+  PRIMARY KEY (`idproductos`,`nrofact`),
+  KEY `fk_factcompra_det_factcompra_encab1_idx` (`nrofact`),
+  CONSTRAINT `fk_factcompra_det_factcompra_encab1` FOREIGN KEY (`nrofact`) REFERENCES `factcompra_encab` (`nrofact`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_factcompra_det_items1` FOREIGN KEY (`idproductos`) REFERENCES `items` (`idproductos`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `factcompra_det`
+--
+
+LOCK TABLES `factcompra_det` WRITE;
+/*!40000 ALTER TABLE `factcompra_det` DISABLE KEYS */;
+INSERT INTO `factcompra_det` VALUES (1,1,150000,10,12),(3,1,50000,5,10),(3,1,50000,5,12),(3,1,50000,5,14),(4,1,25000,10,9),(4,1,25000,10,11),(4,1,25000,10,13);
+/*!40000 ALTER TABLE `factcompra_det` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `factcompra_encab`
+--
+
+DROP TABLE IF EXISTS `factcompra_encab`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `factcompra_encab` (
+  `fechaCompra` date NOT NULL,
+  `nrofact` int(11) NOT NULL,
+  `idformadepago` int(11) NOT NULL,
+  `idcontactos` int(11) NOT NULL,
+  PRIMARY KEY (`nrofact`,`idcontactos`),
+  KEY `fk_factcompra_encab_formadepago1_idx` (`idformadepago`),
+  KEY `fk_factcompra_encab_contactos1_idx` (`idcontactos`),
+  CONSTRAINT `fk_factcompra_encab_contactos1` FOREIGN KEY (`idcontactos`) REFERENCES `contactos` (`idcontactos`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_factcompra_encab_formadepago1` FOREIGN KEY (`idformadepago`) REFERENCES `formadepago` (`idformadepago`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `factcompra_encab`
+--
+
+LOCK TABLES `factcompra_encab` WRITE;
+/*!40000 ALTER TABLE `factcompra_encab` DISABLE KEYS */;
+INSERT INTO `factcompra_encab` VALUES ('2013-12-19',1,1,1),('2013-12-19',2,1,1),('2013-12-19',3,1,1),('2013-12-19',4,1,1),('2013-12-19',5,1,1),('2013-12-20',6,1,1),('2013-12-20',7,1,1),('2013-12-20',8,1,4),('2013-12-20',9,1,4),('2013-12-20',10,1,4),('2013-12-20',11,1,4),('2013-12-20',12,1,1),('2013-12-20',13,1,1),('2013-12-20',14,1,4);
+/*!40000 ALTER TABLE `factcompra_encab` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `facturacompra`
+--
+
+DROP TABLE IF EXISTS `facturacompra`;
+/*!50001 DROP VIEW IF EXISTS `facturacompra`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `facturacompra` (
+  `idproductos` int(10),
+  `cantidad` int(11),
+  `nombreprod` varchar(45),
+  `precioCost` double,
+  `exenta` double,
+  `iva5` double,
+  `iva10` double,
+  `xidcompra` int(11),
+  `xnrofact` int(11),
+  `totexenta` double,
+  `totiva5` double,
+  `totiva10` double,
+  `total5` double(17,0),
+  `total10` double(17,0),
+  `totaliva` double(17,0),
+  `totalfactura` double,
+  `nrofact` int(11),
+  `fechaCompra` date,
+  `idformadepago` int(11),
+  `idcontactos` int(11),
+  `razonSocial` varchar(20),
+  `rucCI` int(11),
+  `direccion` varchar(45)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `facturaventa`
+--
+
+DROP TABLE IF EXISTS `facturaventa`;
+/*!50001 DROP VIEW IF EXISTS `facturaventa`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `facturaventa` (
+  `idproductos` int(10),
+  `cantidad` int(11),
+  `nombreprod` varchar(45),
+  `precioVenta` double,
+  `exenta` double,
+  `iva5` double,
+  `iva10` double,
+  `xidventa` int(11),
+  `xnrofact` int(11),
+  `totexenta` double,
+  `totiva5` double,
+  `totiva10` double,
+  `total5` double(17,0),
+  `total10` double(17,0),
+  `totaliva` double(17,0),
+  `totalfactura` double,
+  `nrofact` int(11),
+  `fechaVenta` date,
+  `idformadepago` int(11),
+  `idcontactos` int(11),
+  `idfuncionarios` int(11),
+  `razonSocial` varchar(20),
+  `rucCI` int(11),
+  `direccion` varchar(45)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `factventa_det`
+--
+
+DROP TABLE IF EXISTS `factventa_det`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `factventa_det` (
+  `idproductos` int(10) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precioVenta` double NOT NULL,
+  `porcIVA` double NOT NULL,
+  `nrofact` int(11) NOT NULL,
+  PRIMARY KEY (`idproductos`,`nrofact`),
+  KEY `fk_factventa_det_items1_idx` (`idproductos`),
+  KEY `fk_factventa_det_factventa_encab1_idx` (`nrofact`),
+  CONSTRAINT `fk_factventa_det_factventa_encab1` FOREIGN KEY (`nrofact`) REFERENCES `factventa_encab` (`nrofact`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_factventa_det_items1` FOREIGN KEY (`idproductos`) REFERENCES `items` (`idproductos`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `factventa_det`
+--
+
+LOCK TABLES `factventa_det` WRITE;
+/*!40000 ALTER TABLE `factventa_det` DISABLE KEYS */;
+INSERT INTO `factventa_det` VALUES (1,1,150000,10,1),(1,1,150000,20,9),(1,1,150000,10,15),(1,12,150000,10,17),(1,12,150000,10,20),(1,3,150000,10,22),(1,1,150000,10,28),(1,1,150000,10,30),(1,1,150000,10,34),(1,12,150000,10,39),(1,8,150000,10,44),(2,1,800000,5,1),(2,1,800000,5,8),(2,3,800000,5,10),(2,1,800000,5,11),(2,5,800000,5,14),(2,1,800000,5,15),(2,2,800000,5,16),(2,1,800000,5,17),(2,8,800000,5,24),(2,1,800000,5,25),(2,1,800000,5,28),(2,1,800000,5,30),(2,1,800000,5,33),(2,1,800000,5,38),(2,12,800000,5,40),(2,12,800000,5,41),(2,2,800000,5,44),(2,2,800000,5,45),(2,2,800000,5,49),(3,1,50000,0,2),(3,12,50000,0,3),(3,1,50000,0,44),(3,1,50000,0,47),(3,1,50000,0,48);
+/*!40000 ALTER TABLE `factventa_det` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `factventa_encab`
+--
+
+DROP TABLE IF EXISTS `factventa_encab`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `factventa_encab` (
+  `nrofact` int(11) NOT NULL,
+  `fechaVenta` date NOT NULL,
+  `idformadepago` int(11) NOT NULL,
+  `idcondiciondepago` int(11) NOT NULL,
+  `idfuncionarios` int(11) NOT NULL,
+  `idcontactos` int(11) NOT NULL,
+  `anulado` int(11) NOT NULL,
+  PRIMARY KEY (`nrofact`),
+  KEY `fk_factventa_encab_formadepago1_idx` (`idformadepago`),
+  KEY `fk_factventa_encab_condiciondepago1_idx` (`idcondiciondepago`),
+  KEY `fk_factventa_encab_funcionarios1_idx` (`idfuncionarios`),
+  KEY `fk_factventa_encab_contactos1_idx` (`idcontactos`),
+  CONSTRAINT `fk_factventa_encab_condiciondepago1` FOREIGN KEY (`idcondiciondepago`) REFERENCES `condiciondepago` (`idcondiciondepago`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_factventa_encab_contactos1` FOREIGN KEY (`idcontactos`) REFERENCES `contactos` (`idcontactos`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_factventa_encab_formadepago1` FOREIGN KEY (`idformadepago`) REFERENCES `formadepago` (`idformadepago`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_factventa_encab_funcionarios1` FOREIGN KEY (`idfuncionarios`) REFERENCES `funcionarios` (`idfuncionarios`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `factventa_encab`
+--
+
+LOCK TABLES `factventa_encab` WRITE;
+/*!40000 ALTER TABLE `factventa_encab` DISABLE KEYS */;
+INSERT INTO `factventa_encab` VALUES (1,'2013-12-12',1,1,3,2,0),(2,'2013-12-12',1,1,3,2,0),(3,'2013-12-12',1,1,3,2,0),(4,'2013-12-12',1,1,3,2,0),(5,'2013-12-12',1,1,3,2,0),(6,'2013-12-12',1,1,3,2,0),(7,'2013-12-12',1,1,3,2,0),(8,'2013-12-12',1,1,3,2,0),(9,'2013-12-12',1,1,3,2,0),(10,'2013-12-12',1,1,3,2,0),(11,'2013-12-12',1,1,3,2,0),(12,'2013-12-12',1,1,3,3,0),(13,'2013-12-12',1,1,3,2,0),(14,'2013-12-12',1,1,3,2,0),(15,'2013-12-12',1,1,3,2,0),(16,'2013-12-13',1,1,3,2,0),(17,'2013-12-14',1,1,3,2,0),(18,'2013-12-14',1,1,3,2,0),(19,'2013-12-14',1,1,3,3,0),(20,'2013-12-14',1,1,3,2,0),(21,'2013-12-14',1,1,3,3,0),(22,'2013-12-14',1,1,3,3,0),(23,'2013-12-14',1,1,3,2,0),(24,'2013-12-14',1,1,3,3,0),(25,'2013-12-14',1,1,3,3,0),(26,'2013-12-14',1,1,3,2,0),(27,'2013-12-14',1,1,3,2,0),(28,'2013-12-14',1,1,3,2,0),(29,'2013-12-14',1,1,3,3,1),(30,'2013-12-14',2,1,3,3,0),(31,'2013-12-15',1,1,3,4,0),(32,'2013-12-15',1,1,3,2,0),(33,'2013-12-15',1,1,3,2,0),(34,'2013-12-19',1,1,3,2,0),(35,'2013-12-19',1,1,3,2,0),(36,'2013-12-19',1,1,3,1,1),(37,'2013-12-19',1,1,3,2,0),(38,'2013-12-19',1,1,3,2,0),(39,'2013-12-19',1,1,3,2,1),(40,'2013-12-19',1,1,3,2,0),(41,'2013-12-19',1,1,3,2,0),(42,'2013-12-19',1,1,3,2,0),(43,'2013-12-19',1,1,3,2,0),(44,'2013-12-19',1,1,3,2,1),(45,'2013-12-19',1,1,3,2,1),(46,'2013-12-19',1,1,3,1,0),(47,'2013-12-19',1,1,3,2,0),(48,'2013-12-19',1,1,3,2,0),(49,'2013-12-20',1,1,3,2,0);
+/*!40000 ALTER TABLE `factventa_encab` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `formadepago`
+--
+
+DROP TABLE IF EXISTS `formadepago`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `formadepago` (
+  `idformadepago` int(11) NOT NULL,
+  `descripcion` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`idformadepago`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `formadepago`
+--
+
+LOCK TABLES `formadepago` WRITE;
+/*!40000 ALTER TABLE `formadepago` DISABLE KEYS */;
+INSERT INTO `formadepago` VALUES (1,'contado'),(2,'credito');
+/*!40000 ALTER TABLE `formadepago` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `funcionarios`
+--
+
+DROP TABLE IF EXISTS `funcionarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `funcionarios` (
+  `idfuncionarios` int(11) NOT NULL,
+  `NombreApellido` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `nroDoc` int(11) NOT NULL,
+  `direccion` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `telCel` int(11) NOT NULL,
+  PRIMARY KEY (`idfuncionarios`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `funcionarios`
+--
+
+LOCK TABLES `funcionarios` WRITE;
+/*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
+INSERT INTO `funcionarios` VALUES (2,'sterh',6485,'klijoi',64864),(3,'Romi Gomez',5077731,'caaguazu',976132082),(4,'Kiki Canibal',123456,'carretera',7894565);
+/*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_marcas`
+--
+
+DROP TABLE IF EXISTS `item_marcas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_marcas` (
+  `idmarcas` int(10) NOT NULL,
+  `nombremarca` varchar(45) NOT NULL,
+  PRIMARY KEY (`idmarcas`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_marcas`
+--
+
+LOCK TABLES `item_marcas` WRITE;
+/*!40000 ALTER TABLE `item_marcas` DISABLE KEYS */;
+INSERT INTO `item_marcas` VALUES (1,'Ulala'),(2,'sawari'),(3,'Luana'),(4,'yiza'),(5,'Disney');
+/*!40000 ALTER TABLE `item_marcas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_procedencia`
+--
+
+DROP TABLE IF EXISTS `item_procedencia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_procedencia` (
+  `idprocedencia` int(10) NOT NULL,
+  `descripProc` varchar(45) NOT NULL,
+  PRIMARY KEY (`idprocedencia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_procedencia`
+--
+
+LOCK TABLES `item_procedencia` WRITE;
+/*!40000 ALTER TABLE `item_procedencia` DISABLE KEYS */;
+INSERT INTO `item_procedencia` VALUES (1,'Chile'),(2,'Brasil'),(3,'Japon'),(4,'China');
+/*!40000 ALTER TABLE `item_procedencia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_secciones`
+--
+
+DROP TABLE IF EXISTS `item_secciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_secciones` (
+  `idseccion` int(11) NOT NULL,
+  `descripseccion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idseccion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_secciones`
+--
+
+LOCK TABLES `item_secciones` WRITE;
+/*!40000 ALTER TABLE `item_secciones` DISABLE KEYS */;
+INSERT INTO `item_secciones` VALUES (1,'Vestidos'),(2,'Polleras'),(3,'Camizas'),(4,'Bluzas'),(5,'Short'),(6,'Remeritas');
+/*!40000 ALTER TABLE `item_secciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_ubicaciones`
+--
+
+DROP TABLE IF EXISTS `item_ubicaciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_ubicaciones` (
+  `idubicaciones` int(11) NOT NULL,
+  `nombre_ubica` varchar(40) NOT NULL,
+  PRIMARY KEY (`idubicaciones`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_ubicaciones`
+--
+
+LOCK TABLES `item_ubicaciones` WRITE;
+/*!40000 ALTER TABLE `item_ubicaciones` DISABLE KEYS */;
+INSERT INTO `item_ubicaciones` VALUES (1,'Deposito'),(2,'Planta Baja'),(3,'Subsuelo'),(4,'Planta Alta');
+/*!40000 ALTER TABLE `item_ubicaciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `items`
+--
+
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `items` (
+  `idproductos` int(10) NOT NULL,
+  `codigobarras` varchar(25) NOT NULL,
+  `nombreprod` varchar(45) NOT NULL,
+  `preciocosto` double NOT NULL,
+  `precioventa` double NOT NULL,
+  `prodnacional` tinyint(1) NOT NULL,
+  `stockmin` int(10) NOT NULL,
+  `idseccion` int(11) NOT NULL,
+  `idmarcas` int(10) NOT NULL,
+  `idubicaciones` int(11) NOT NULL,
+  `idprocedencia` int(10) NOT NULL,
+  `idcategoria` int(11) NOT NULL,
+  PRIMARY KEY (`idproductos`),
+  KEY `fk_secc` (`idseccion`),
+  KEY `fk_markas` (`idmarcas`),
+  KEY `fk_ubicacc` (`idubicaciones`),
+  KEY `fk_items_item_Procedencia1_idx` (`idprocedencia`),
+  KEY `fk_items_categoria1_idx` (`idcategoria`),
+  CONSTRAINT `fk_items_categoria1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`idcategoria`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_items_item_Procedencia1` FOREIGN KEY (`idprocedencia`) REFERENCES `item_procedencia` (`idprocedencia`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_markas` FOREIGN KEY (`idmarcas`) REFERENCES `item_marcas` (`idmarcas`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_secc` FOREIGN KEY (`idseccion`) REFERENCES `item_secciones` (`idseccion`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_ubicacc` FOREIGN KEY (`idubicaciones`) REFERENCES `item_ubicaciones` (`idubicaciones`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `items`
+--
+
+LOCK TABLES `items` WRITE;
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES (1,'78945620','Vestido',150000,300000,0,20,2,1,3,2,1),(2,'7896214523','Pollera',800000,10000000,1,5,1,2,2,1,2),(3,'785121000','Camisa',50000,100000,1,15,2,3,2,4,2),(4,'82455456','Lenceria',25000,50000,1,25,2,4,1,2,1),(5,'45968745','alemara',25000,40000,0,12,4,4,1,2,1);
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_cto`
+--
+
+DROP TABLE IF EXISTS `tipo_cto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_cto` (
+  `idtipo_cto` int(11) NOT NULL,
+  `desscripCTO` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idtipo_cto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_cto`
+--
+
+LOCK TABLES `tipo_cto` WRITE;
+/*!40000 ALTER TABLE `tipo_cto` DISABLE KEYS */;
+INSERT INTO `tipo_cto` VALUES (1,'Proveedor'),(2,'Cliente');
+/*!40000 ALTER TABLE `tipo_cto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `totalcompra`
+--
+
+DROP TABLE IF EXISTS `totalcompra`;
+/*!50001 DROP VIEW IF EXISTS `totalcompra`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `totalcompra` (
+  `nrofact` int(11),
+  `totexenta` double,
+  `totiva5` double,
+  `totiva10` double,
+  `total5` double(17,0),
+  `total10` double(17,0),
+  `totaliva` double(17,0),
+  `totalfactura` double
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `totalventa`
+--
+
+DROP TABLE IF EXISTS `totalventa`;
+/*!50001 DROP VIEW IF EXISTS `totalventa`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `totalventa` (
+  `nrofact` int(11),
+  `totexenta` double,
+  `totiva5` double,
+  `totiva10` double,
+  `total5` double(17,0),
+  `total10` double(17,0),
+  `totaliva` double(17,0),
+  `totalfactura` double
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `idfuncionarios` int(11) NOT NULL,
+  `alias` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `usuActivo` tinyint(4) NOT NULL,
+  `clave` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idfuncionarios`),
+  CONSTRAINT `fk_usuario_funcionarios1` FOREIGN KEY (`idfuncionarios`) REFERENCES `funcionarios` (`idfuncionarios`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (2,'gsegs',0,'°±°²°³'),(3,'Chomi',0,'°¶°±²°±±'),(4,'Knibal',1,'123456789');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `vistacobro`
+--
+
+DROP TABLE IF EXISTS `vistacobro`;
+/*!50001 DROP VIEW IF EXISTS `vistacobro`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `vistacobro` (
+  `idcobro_cuotas` int(11),
+  `idcontactos` int(11),
+  `razonSocial` varchar(20),
+  `nrofact` int(11),
+  `montoEntregado` double,
+  `idcondiciondepago` int(11),
+  `descripcion` varchar(15),
+  `rucCI` int(11)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vistaitem`
+--
+
+DROP TABLE IF EXISTS `vistaitem`;
+/*!50001 DROP VIEW IF EXISTS `vistaitem`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `vistaitem` (
+  `idproductos` int(10),
+  `codigobarras` varchar(25),
+  `nombreprod` varchar(45),
+  `preciocosto` double,
+  `precioventa` double,
+  `stockmin` int(10),
+  `porcIVA` float
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vistausuarios`
+--
+
+DROP TABLE IF EXISTS `vistausuarios`;
+/*!50001 DROP VIEW IF EXISTS `vistausuarios`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `vistausuarios` (
+  `idfuncionarios` int(11),
+  `NombreApellido` varchar(15),
+  `alias` varchar(15)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'lpiii'
+--
+
+--
+-- Final view structure for view `detallecompra`
+--
+
+/*!50001 DROP TABLE IF EXISTS `detallecompra`*/;
+/*!50001 DROP VIEW IF EXISTS `detallecompra`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `detallecompra` AS select `d`.`idproductos` AS `idproductos`,`d`.`cantidad` AS `cantidad`,`p`.`nombreprod` AS `nombreprod`,`d`.`precioCost` AS `precioCost`,if((`d`.`porcIVA` = 0),(`d`.`cantidad` * `d`.`precioCost`),0) AS `exenta`,if((`d`.`porcIVA` = 5),(`d`.`cantidad` * `d`.`precioCost`),0) AS `iva5`,if((`d`.`porcIVA` = 10),(`d`.`cantidad` * `d`.`precioCost`),0) AS `iva10`,`d`.`nrofact` AS `xidcompra` from (`factcompra_det` `d` join `items` `p` on((`d`.`idproductos` = `p`.`idproductos`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `detalleventa`
+--
+
+/*!50001 DROP TABLE IF EXISTS `detalleventa`*/;
+/*!50001 DROP VIEW IF EXISTS `detalleventa`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `detalleventa` AS select `d`.`idproductos` AS `idproductos`,`d`.`cantidad` AS `cantidad`,`p`.`nombreprod` AS `nombreprod`,`d`.`precioVenta` AS `precioVenta`,if((`d`.`porcIVA` = 0),(`d`.`cantidad` * `d`.`precioVenta`),0) AS `exenta`,if((`d`.`porcIVA` = 5),(`d`.`cantidad` * `d`.`precioVenta`),0) AS `iva5`,if((`d`.`porcIVA` = 10),(`d`.`cantidad` * `d`.`precioVenta`),0) AS `iva10`,`d`.`nrofact` AS `xidventa` from (`factventa_det` `d` join `items` `p` on((`d`.`idproductos` = `p`.`idproductos`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `facturacompra`
+--
+
+/*!50001 DROP TABLE IF EXISTS `facturacompra`*/;
+/*!50001 DROP VIEW IF EXISTS `facturacompra`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `facturacompra` AS select `vd`.`idproductos` AS `idproductos`,`vd`.`cantidad` AS `cantidad`,`vd`.`nombreprod` AS `nombreprod`,`vd`.`precioCost` AS `precioCost`,`vd`.`exenta` AS `exenta`,`vd`.`iva5` AS `iva5`,`vd`.`iva10` AS `iva10`,`vd`.`xidcompra` AS `xidcompra`,`vt`.`nrofact` AS `xnrofact`,`vt`.`totexenta` AS `totexenta`,`vt`.`totiva5` AS `totiva5`,`vt`.`totiva10` AS `totiva10`,`vt`.`total5` AS `total5`,`vt`.`total10` AS `total10`,`vt`.`totaliva` AS `totaliva`,`vt`.`totalfactura` AS `totalfactura`,`cv`.`nrofact` AS `nrofact`,`cv`.`fechaCompra` AS `fechaCompra`,`cv`.`idformadepago` AS `idformadepago`,`cv`.`idcontactos` AS `idcontactos`,`cli`.`razonSocial` AS `razonSocial`,`cli`.`rucCI` AS `rucCI`,`cli`.`direccion` AS `direccion` from (((`detallecompra` `vd` left join `totalcompra` `vt` on((`vd`.`xidcompra` = `vt`.`nrofact`))) join `factcompra_encab` `cv` on((`vd`.`xidcompra` = `cv`.`nrofact`))) join `contactos` `cli` on((`cv`.`idcontactos` = `cli`.`idcontactos`))) order by `vd`.`xidcompra` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `facturaventa`
+--
+
+/*!50001 DROP TABLE IF EXISTS `facturaventa`*/;
+/*!50001 DROP VIEW IF EXISTS `facturaventa`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `facturaventa` AS select `vd`.`idproductos` AS `idproductos`,`vd`.`cantidad` AS `cantidad`,`vd`.`nombreprod` AS `nombreprod`,`vd`.`precioVenta` AS `precioVenta`,`vd`.`exenta` AS `exenta`,`vd`.`iva5` AS `iva5`,`vd`.`iva10` AS `iva10`,`vd`.`xidventa` AS `xidventa`,`vt`.`nrofact` AS `xnrofact`,`vt`.`totexenta` AS `totexenta`,`vt`.`totiva5` AS `totiva5`,`vt`.`totiva10` AS `totiva10`,`vt`.`total5` AS `total5`,`vt`.`total10` AS `total10`,`vt`.`totaliva` AS `totaliva`,`vt`.`totalfactura` AS `totalfactura`,`cv`.`nrofact` AS `nrofact`,`cv`.`fechaVenta` AS `fechaVenta`,`cv`.`idformadepago` AS `idformadepago`,`cv`.`idcontactos` AS `idcontactos`,`cv`.`idfuncionarios` AS `idfuncionarios`,`cli`.`razonSocial` AS `razonSocial`,`cli`.`rucCI` AS `rucCI`,`cli`.`direccion` AS `direccion` from (((`detalleventa` `vd` left join `totalventa` `vt` on((`vd`.`xidventa` = `vt`.`nrofact`))) join `factventa_encab` `cv` on((`vd`.`xidventa` = `cv`.`nrofact`))) join `contactos` `cli` on((`cv`.`idcontactos` = `cli`.`idcontactos`))) order by `vd`.`xidventa` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `totalcompra`
+--
+
+/*!50001 DROP TABLE IF EXISTS `totalcompra`*/;
+/*!50001 DROP VIEW IF EXISTS `totalcompra`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `totalcompra` AS select `detallecompra`.`xidcompra` AS `nrofact`,sum(`detallecompra`.`exenta`) AS `totexenta`,sum(`detallecompra`.`iva5`) AS `totiva5`,sum(`detallecompra`.`iva10`) AS `totiva10`,round((sum(`detallecompra`.`iva5`) / 21),0) AS `total5`,round((sum(`detallecompra`.`iva10`) / 11),0) AS `total10`,round(((sum(`detallecompra`.`iva5`) / 21) + (sum(`detallecompra`.`iva10`) / 11)),0) AS `totaliva`,((sum(`detallecompra`.`exenta`) + sum(`detallecompra`.`iva5`)) + sum(`detallecompra`.`iva10`)) AS `totalfactura` from `detallecompra` group by `detallecompra`.`xidcompra` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `totalventa`
+--
+
+/*!50001 DROP TABLE IF EXISTS `totalventa`*/;
+/*!50001 DROP VIEW IF EXISTS `totalventa`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `totalventa` AS select `detalleventa`.`xidventa` AS `nrofact`,sum(`detalleventa`.`exenta`) AS `totexenta`,sum(`detalleventa`.`iva5`) AS `totiva5`,sum(`detalleventa`.`iva10`) AS `totiva10`,round((sum(`detalleventa`.`iva5`) / 21),0) AS `total5`,round((sum(`detalleventa`.`iva10`) / 11),0) AS `total10`,round(((sum(`detalleventa`.`iva5`) / 21) + (sum(`detalleventa`.`iva10`) / 11)),0) AS `totaliva`,((sum(`detalleventa`.`exenta`) + sum(`detalleventa`.`iva5`)) + sum(`detalleventa`.`iva10`)) AS `totalfactura` from `detalleventa` group by `detalleventa`.`xidventa` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vistacobro`
+--
+
+/*!50001 DROP TABLE IF EXISTS `vistacobro`*/;
+/*!50001 DROP VIEW IF EXISTS `vistacobro`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vistacobro` AS select `c`.`idcobro_cuotas` AS `idcobro_cuotas`,`c`.`idcontactos` AS `idcontactos`,`cl`.`razonSocial` AS `razonSocial`,`c`.`nrofact` AS `nrofact`,`c`.`montoEntregado` AS `montoEntregado`,`c`.`idcondiciondepago` AS `idcondiciondepago`,`cp`.`descripcion` AS `descripcion`,`cl`.`rucCI` AS `rucCI` from ((`cobro_cuotas` `c` join `contactos` `cl` on((`c`.`idcontactos` = `cl`.`idcontactos`))) join `condiciondepago` `cp` on((`c`.`idcondiciondepago` = `cp`.`idcondiciondepago`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vistaitem`
+--
+
+/*!50001 DROP TABLE IF EXISTS `vistaitem`*/;
+/*!50001 DROP VIEW IF EXISTS `vistaitem`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vistaitem` AS select `p`.`idproductos` AS `idproductos`,`p`.`codigobarras` AS `codigobarras`,`p`.`nombreprod` AS `nombreprod`,`p`.`preciocosto` AS `preciocosto`,`p`.`precioventa` AS `precioventa`,`p`.`stockmin` AS `stockmin`,`c`.`porcIVA` AS `porcIVA` from (`categoria` `c` join `items` `p` on((`c`.`idcategoria` = `p`.`idcategoria`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vistausuarios`
+--
+
+/*!50001 DROP TABLE IF EXISTS `vistausuarios`*/;
+/*!50001 DROP VIEW IF EXISTS `vistausuarios`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vistausuarios` AS select `f`.`idfuncionarios` AS `idfuncionarios`,`f`.`NombreApellido` AS `NombreApellido`,`u`.`alias` AS `alias` from (`funcionarios` `f` join `usuario` `u` on((`u`.`idfuncionarios` = `f`.`idfuncionarios`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-12-20 18:56:34
